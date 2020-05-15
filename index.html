@@ -9,6 +9,10 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/5ce792d71e.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="container container--main">
@@ -23,28 +27,40 @@
         <div class="navbar__search-wrapper">
           <input type="text" class="navbar__search" />
           <div class="navbar__search__button">
-            <img
-              src="./icons/search-solid.svg"
-              alt="Search Button"
-              class="navbar__search__icon"
-            />
+            <i class="fas fa-search navbar__search__icon"></i>
           </div>
         </div>
 
         <ul class="navbar__links" id="navLinks">
           <li class="navbar__link-container">
-            <a href="#" class="navbar__link">Account</a>
+            <a href="#" class="navbar__close" id="navbarClose">
+              <i class="fas fa-arrow-right"></i>
+            </a>
           </li>
           <li class="navbar__link-container">
-            <a href="#" class="navbar__link">Prime</a>
+            <a href="#" class="navbar__link">
+              <i class="fas fa-user navbar__link__icon"></i>
+              <p class="navbar__link__text">Account</p>
+            </a>
           </li>
           <li class="navbar__link-container">
-            <a href="#" class="navbar__link">Orders</a>
+            <a href="#" class="navbar__link"
+              ><i class="fab fa-amazon navbar__link__icon"></i>
+              <p class="navbar__link__text">Prime</p>
+            </a>
           </li>
           <li class="navbar__link-container">
-            <a href="#" class="navbar__link"> Cart</a>
+            <a href="#" class="navbar__link">
+              <i class="fas fa-box-open navbar__link__icon"></i>
+              <p class="navbar__link__text">Orders</p></a
+            >
           </li>
         </ul>
+        <div class="navbar__cart-container">
+          <a href="#" class="navbar__cart"
+            ><i class="fas fa-shopping-cart"></i>
+          </a>
+        </div>
         <div class="navbar__burger" id="hamburger">
           <div class="line1"></div>
           <div class="line2"></div>
