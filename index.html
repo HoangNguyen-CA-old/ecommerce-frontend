@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container container--main">
+      <nav class="navbar">
+        <div class="navbar__logo-wrapper">
+          <img
+            src="./images/Amazon_logo.svg"
+            alt="Amazon Logo"
+            class="navbar__logo"
+          />
+        </div>
+        <div class="navbar__search-wrapper">
+          <input type="text" class="navbar__search" />
+          <div class="navbar__search__button">
+            <img
+              src="./icons/search-solid.svg"
+              alt="Search Button"
+              class="navbar__search__icon"
+            />
+          </div>
+        </div>
+
+        <ul class="navbar__links" id="navLinks">
+          <li class="navbar__link-container">
+            <a href="#" class="navbar__link">Account</a>
+          </li>
+          <li class="navbar__link-container">
+            <a href="#" class="navbar__link">Prime</a>
+          </li>
+          <li class="navbar__link-container">
+            <a href="#" class="navbar__link">Orders</a>
+          </li>
+          <li class="navbar__link-container">
+            <a href="#" class="navbar__link"> Cart</a>
+          </li>
+        </ul>
+        <div class="navbar__burger" id="hamburger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </nav>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
