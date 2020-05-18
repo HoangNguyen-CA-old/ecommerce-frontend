@@ -15,58 +15,59 @@
     ></script>
   </head>
   <body>
-    <div class="container container--main">
-      <nav class="navbar">
-        <div class="navbar__logo-wrapper">
-          <img
-            src="./images/Amazon_logo.svg"
-            alt="Amazon Logo"
-            class="navbar__logo"
-          />
+    <nav class="navbar">
+      <div class="navbar__logo-wrapper">
+        <img
+          src="./images/Amazon_logo.svg"
+          alt="Amazon Logo"
+          class="navbar__logo"
+        />
+      </div>
+      <div class="navbar__search-wrapper">
+        <input type="text" class="navbar__search" />
+        <div class="navbar__search__button">
+          <i class="fas fa-search navbar__search__icon"></i>
         </div>
-        <div class="navbar__search-wrapper">
-          <input type="text" class="navbar__search" />
-          <div class="navbar__search__button">
-            <i class="fas fa-search navbar__search__icon"></i>
-          </div>
-        </div>
+      </div>
 
-        <ul class="navbar__links" id="navLinks">
-          <li class="navbar__link-container">
-            <a href="#" class="navbar__close" id="navbarClose">
-              <i class="fas fa-arrow-right"></i>
-            </a>
-          </li>
-          <li class="navbar__link-container">
-            <a href="#" class="navbar__link">
-              <i class="fas fa-user navbar__link__icon"></i>
-              <p class="navbar__link__text">Account</p>
-            </a>
-          </li>
-          <li class="navbar__link-container">
-            <a href="#" class="navbar__link"
-              ><i class="fab fa-amazon navbar__link__icon"></i>
-              <p class="navbar__link__text">Prime</p>
-            </a>
-          </li>
-          <li class="navbar__link-container">
-            <a href="#" class="navbar__link">
-              <i class="fas fa-box-open navbar__link__icon"></i>
-              <p class="navbar__link__text">Orders</p></a
-            >
-          </li>
-        </ul>
-        <div class="navbar__cart-container">
-          <a href="#" class="navbar__cart"
-            ><i class="fas fa-shopping-cart"></i>
+      <ul class="navbar__links" id="navLinks">
+        <li class="navbar__link-container">
+          <a href="#" class="navbar__close" id="navbarClose">
+            <i class="fas fa-arrow-right"></i>
           </a>
-        </div>
-        <div class="navbar__burger" id="hamburger">
-          <div class="line1"></div>
-          <div class="line2"></div>
-          <div class="line3"></div>
-        </div>
-      </nav>
+        </li>
+        <li class="navbar__link-container">
+          <a href="#" class="navbar__link">
+            <i class="fas fa-user navbar__link__icon"></i>
+            <p class="navbar__link__text">Account</p>
+          </a>
+        </li>
+        <li class="navbar__link-container">
+          <a href="#" class="navbar__link"
+            ><i class="fab fa-amazon navbar__link__icon"></i>
+            <p class="navbar__link__text">Prime</p>
+          </a>
+        </li>
+        <li class="navbar__link-container">
+          <a href="#" class="navbar__link">
+            <i class="fas fa-box-open navbar__link__icon"></i>
+            <p class="navbar__link__text">Orders</p></a
+          >
+        </li>
+      </ul>
+      <div class="navbar__cart-container">
+        <a href="#" class="navbar__cart"
+          ><i class="fas fa-shopping-cart"></i>
+        </a>
+      </div>
+      <div class="navbar__burger" id="hamburger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="products" id="products"></div>
     </div>
     <script src="script.js"></script>
   </body>
