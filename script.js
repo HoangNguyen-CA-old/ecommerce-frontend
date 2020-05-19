@@ -3,6 +3,11 @@ let navLinks = document.querySelector('#navLinks');
 let navbarClose = document.querySelector('#navbarClose');
 let productsContainer = document.querySelector('#products');
 
+let shoppingCart = document.querySelector('#shoppingCart');
+let modal = document.querySelector('#modal');
+let modalBackdrop = document.querySelector('#modalBackdrop');
+let modalClose = document.querySelector('#modalClose');
+
 let cart = new Map(); //id => amount
 
 //products supposed to be fetched from database
@@ -69,6 +74,21 @@ hamburger.addEventListener('click', () => {
 navbarClose.addEventListener('click', () => {
   console.log('wow');
   navLinks.classList.remove('navbar__links--active');
+});
+
+shoppingCart.addEventListener('click', () => {
+  modal.classList.add('modal--active');
+  modalBackdrop.classList.add('modal__backdrop--active');
+});
+
+modalBackdrop.addEventListener('click', () => {
+  modal.classList.remove('modal--active');
+  modalBackdrop.classList.remove('modal__backdrop--active');
+});
+
+modalClose.addEventListener('click', () => {
+  modal.classList.remove('modal--active');
+  modalBackdrop.classList.remove('modal__backdrop--active');
 });
 
 init();

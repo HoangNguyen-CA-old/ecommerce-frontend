@@ -40,6 +40,50 @@ body {
   padding: 1em;
   background-color: var(--secondary-color);
 }
+.modal__backdrop {
+  display: none;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 100;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+}
+
+.modal__backdrop--active {
+  display: block;
+}
+
+.modal {
+  display: none;
+  padding: 1em 1.2em;
+
+  position: fixed;
+  width: 80%;
+  max-width: 600px;
+  min-height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+
+  z-index: 1000;
+  background-color: white;
+}
+
+.modal--active {
+  display: block;
+}
+
+.modal__close {
+  float: right;
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
 
 .navbar__logo-wrapper {
   width: 8rem;
@@ -142,6 +186,7 @@ body {
 .navbar__cart {
   font-size: 1.7rem;
   color: white;
+  cursor: pointer;
 }
 
 .navbar__burger {

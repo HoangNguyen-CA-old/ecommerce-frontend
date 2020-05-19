@@ -15,6 +15,12 @@
     ></script>
   </head>
   <body>
+    <div class="modal__backdrop" id="modalBackdrop"></div>
+    <div class="modal" id="modal">
+      <span class="modal__close" id="modalClose">
+        <i class="fas fa-times"></i>
+      </span>
+    </div>
     <nav class="navbar">
       <div class="navbar__logo-wrapper">
         <img
@@ -56,7 +62,7 @@
         </li>
       </ul>
       <div class="navbar__cart-container">
-        <a href="#" class="navbar__cart"
+        <a class="navbar__cart" id="shoppingCart"
           ><i class="fas fa-shopping-cart"></i>
         </a>
       </div>
