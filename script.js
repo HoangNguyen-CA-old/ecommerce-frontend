@@ -42,26 +42,19 @@ let products = [
 ];
 
 function addToCart(id) {
+  let product = getProduct(id);
   let item = cart.get(id);
+
   let amount;
   if (item != null) {
     amount = item.amount + 1;
   } else {
     amount = 1;
   }
+  let total = +(product.price * amount).toFixed(2);
 
-  let display = document.querySelector(`#display-${id}`);
-  display.innerHTML = `${amount} item(s) in cart`;
-  cart.set(id, { amount, total: 0 });
-}
-
-function updateCartTotal() {
-  for (let [key, val] of cart) {
-    let product = getProduct(key);
-
-    let total = (val.amount * product.price).toFixed(2);
-    cart.set(key, { ...val, total });
-  }
+  cart.set(id, { amount, total });
+  updateDisplay(id, amount);
 }
 
 function updateTax() {
@@ -74,13 +67,11 @@ function updateTax() {
   }
 
   let taxTotal = total * taxRatio;
-  taxPrice.innerHTML = taxTotal.toFixed(2);
-  totalPrice.innerHTML = (total + taxTotal).toFixed(2);
+  taxPrice.innerHTML = `$${taxTotal.toFixed(2)}`;
+  totalPrice.innerHTML = `$${(total + taxTotal).toFixed(2)}`;
 }
 
 function initCart() {
-  updateCartTotal();
-
   let content = `
   <tr>
     <th>Name</th>
@@ -99,7 +90,7 @@ function initCart() {
           <tr class="table__item">
             <td>${product.name}</td>
             <td>$${product.price}</td>
-            <td><input type="number" class="modal__item-amount" onchange="updateCartValue(${id}, this.value)" value="${val.amount}"/></td>
+            <td><input type="number" class="modal__item-amount" onchange="updateCartItem(${id}, this.value)" value="${val.amount}"/></td>
             <td>$${val.total}</td>
             <td><button onclick="deleteCartItem(${id})" class="modal__item-remove">remove</button></td>
           </tr>
@@ -126,18 +117,26 @@ function initCart() {
   updateTax();
 }
 
-function updateCartValue(id, value) {
-  let item = cart.get(id);
+function updateCartItem(id, value) {
+  let amount = +value;
+  if (amount > 0) {
+    let product = getProduct(id);
 
-  let display = document.querySelector(`#display-${id}`);
-  display.innerHTML = `${value} item(s) in cart`;
-  cart.set(id, { ...item, amount: value });
+    let total = (+product.price * amount).toFixed(2);
+    cart.set(id, { total, amount });
+    updateDisplay(id, amount);
 
-  initCart();
+    initCart();
+  } else {
+    deleteCartItem(id);
+    updateDisplay(id, 0);
+  }
 }
 
 function deleteCartItem(id) {
   cart.set(id, { amount: 0, total: 0 });
+  updateDisplay(id, 0);
+
   initCart();
 }
 
@@ -146,6 +145,15 @@ function getProduct(id) {
     if (product.id === id) return product;
   }
   throw new Error(`Product with an id of ${id} not found`);
+}
+
+function updateDisplay(id, amount) {
+  let display = document.querySelector(`#display-${id}`);
+  if (amount > 0) {
+    display.innerHTML = `${amount} item(s) in cart`;
+  } else {
+    display.innerHTML = '';
+  }
 }
 
 function addProductToDOM(product) {
