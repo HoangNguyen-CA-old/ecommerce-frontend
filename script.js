@@ -10,7 +10,13 @@ let modalClose = document.querySelector('#modalClose');
 
 let shoppingContainer = document.querySelector('#shoppingContainer');
 
-let cart = new Map(); //id => amount
+let cart = localStorage.getItem('shoppingCart');
+if (cart == null) {
+  cart = new Map();
+} else {
+  cart = new Map(JSON.parse(cart));
+}
+
 let taxRatio = 0.1;
 
 //products supposed to be fetched from database
@@ -51,9 +57,11 @@ function addToCart(id) {
   } else {
     amount = 1;
   }
+
   let total = +(product.price * amount).toFixed(2);
 
   cart.set(id, { amount, total });
+  updateLocalStorage();
   updateDisplay(id, amount);
 }
 
@@ -69,6 +77,87 @@ function updateTax() {
   let taxTotal = total * taxRatio;
   taxPrice.innerHTML = `$${taxTotal.toFixed(2)}`;
   totalPrice.innerHTML = `$${(total + taxTotal).toFixed(2)}`;
+}
+
+function updateCartItem(id, value) {
+  let amount = +value;
+  if (amount > 0) {
+    let product = getProduct(id);
+    let total = (+product.price * amount).toFixed(2);
+    cart.set(id, { total, amount });
+
+    updateLocalStorage();
+    updateDisplay(id, amount);
+    initCart();
+  } else {
+    deleteCartItem(id);
+    updateDisplay(id, 0);
+  }
+}
+
+function deleteCartItem(id) {
+  cart.set(id, { amount: 0, total: 0 });
+  updateLocalStorage();
+  updateDisplay(id, 0);
+
+  initCart();
+}
+
+function getProduct(id) {
+  for (let product of products) {
+    if (product.id === id) return product;
+  }
+  throw new Error(`Product with an id of ${id} not found`);
+}
+
+function updateDisplay(id, amount) {
+  console.log(id, amount);
+  let display = document.querySelector(`#display-${id}`);
+  if (amount > 0) {
+    display.innerHTML = `${amount} item(s) in cart`;
+  } else {
+    display.innerHTML = '';
+  }
+}
+
+function updateLocalStorage() {
+  localStorage.setItem('shoppingCart', JSON.stringify([...cart.entries()]));
+}
+
+function addProductToDOM(product) {
+  //setup display
+  let id = product.id;
+  let item = cart.get(id);
+
+  let el = document.createElement('div');
+  el.classList.add('product__item');
+  let image = document.createElement('img');
+  image.classList.add('product__image');
+  image.src = product.image;
+  el.appendChild(image);
+
+  let main = document.createElement('div');
+  main.classList.add('product__main');
+  main.innerHTML = `
+  <h6 class="product__name">
+ ${product.name}
+  </h6>
+  <p class="product__desc">${product.desc}</p>
+  <p class="product__price">$${product.price}</p>
+  <button class="button button--buy" onclick="addToCart(${product.id})">ADD TO CART</button>
+  <p id="display-${product.id}"></p>
+  `;
+  el.appendChild(main);
+  productsContainer.appendChild(el);
+  if (item != null) {
+    updateDisplay(id, item.amount);
+  }
+}
+
+function init() {
+  products.forEach((el) => {
+    addProductToDOM(el);
+  });
 }
 
 function initCart() {
@@ -115,74 +204,6 @@ function initCart() {
 
   shoppingContainer.innerHTML = content;
   updateTax();
-}
-
-function updateCartItem(id, value) {
-  let amount = +value;
-  if (amount > 0) {
-    let product = getProduct(id);
-
-    let total = (+product.price * amount).toFixed(2);
-    cart.set(id, { total, amount });
-    updateDisplay(id, amount);
-
-    initCart();
-  } else {
-    deleteCartItem(id);
-    updateDisplay(id, 0);
-  }
-}
-
-function deleteCartItem(id) {
-  cart.set(id, { amount: 0, total: 0 });
-  updateDisplay(id, 0);
-
-  initCart();
-}
-
-function getProduct(id) {
-  for (let product of products) {
-    if (product.id === id) return product;
-  }
-  throw new Error(`Product with an id of ${id} not found`);
-}
-
-function updateDisplay(id, amount) {
-  let display = document.querySelector(`#display-${id}`);
-  if (amount > 0) {
-    display.innerHTML = `${amount} item(s) in cart`;
-  } else {
-    display.innerHTML = '';
-  }
-}
-
-function addProductToDOM(product) {
-  let el = document.createElement('div');
-  el.classList.add('product__item');
-  let image = document.createElement('img');
-  image.classList.add('product__image');
-  image.src = product.image;
-  el.appendChild(image);
-
-  let main = document.createElement('div');
-  main.classList.add('product__main');
-  main.innerHTML = `
-  <h6 class="product__name">
- ${product.name}
-  </h6>
-  <p class="product__desc">${product.desc}</p>
-  <p class="product__price">$${product.price}</p>
-  <button class="button button--buy" onclick="addToCart(${product.id})">ADD TO CART</button>
-  <p id="display-${product.id}"></p>
-  `;
-  el.appendChild(main);
-  productsContainer.appendChild(el);
-}
-
-function init() {
-  products.forEach((el) => {
-    addProductToDOM(el);
-  });
 }
 
 hamburger.addEventListener('click', () => {
