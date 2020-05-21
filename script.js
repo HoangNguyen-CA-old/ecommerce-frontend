@@ -48,19 +48,16 @@ let products = [
 ];
 
 function addToCart(id) {
-  let product = getProduct(id);
-  let item = cart.get(id);
+  let amount = cart.get(id);
 
-  let amount;
-  if (item != null) {
-    amount = item.amount + 1;
+  if (amount != null) {
+    amount += 1;
   } else {
     amount = 1;
   }
 
-  let total = +(product.price * amount).toFixed(2);
+  cart.set(id, amount);
 
-  cart.set(id, { amount, total });
   updateLocalStorage();
   updateDisplay(id, amount);
 }
@@ -70,8 +67,9 @@ function updateTax() {
   let totalPrice = document.querySelector('#totalPrice');
 
   let total = 0;
-  for (let [key, val] of cart) {
-    total += +val.total;
+  for (let [id, amount] of cart) {
+    let product = getProduct(id);
+    total += amount * product.price;
   }
 
   let taxTotal = total * taxRatio;
@@ -82,10 +80,7 @@ function updateTax() {
 function updateCartItem(id, value) {
   let amount = +value;
   if (amount > 0) {
-    let product = getProduct(id);
-    let total = (+product.price * amount).toFixed(2);
-    cart.set(id, { total, amount });
-
+    cart.set(id, amount);
     updateLocalStorage();
     updateDisplay(id, amount);
     initCart();
@@ -96,10 +91,9 @@ function updateCartItem(id, value) {
 }
 
 function deleteCartItem(id) {
-  cart.set(id, { amount: 0, total: 0 });
+  cart.set(id, 0);
   updateLocalStorage();
   updateDisplay(id, 0);
-
   initCart();
 }
 
@@ -111,7 +105,6 @@ function getProduct(id) {
 }
 
 function updateDisplay(id, amount) {
-  console.log(id, amount);
   let display = document.querySelector(`#display-${id}`);
   if (amount > 0) {
     display.innerHTML = `${amount} item(s) in cart`;
@@ -125,10 +118,7 @@ function updateLocalStorage() {
 }
 
 function addProductToDOM(product) {
-  //setup display
   let id = product.id;
-  let item = cart.get(id);
-
   let el = document.createElement('div');
   el.classList.add('product__item');
   let image = document.createElement('img');
@@ -149,8 +139,10 @@ function addProductToDOM(product) {
   `;
   el.appendChild(main);
   productsContainer.appendChild(el);
-  if (item != null) {
-    updateDisplay(id, item.amount);
+
+  let amount = cart.get(id);
+  if (amount != null) {
+    updateDisplay(id, amount);
   }
 }
 
@@ -171,16 +163,16 @@ function initCart() {
   </tr>
   `;
 
-  for (let [key, val] of cart) {
-    let id = +key;
+  for (let [id, amount] of cart) {
     let product = getProduct(id);
-    if (val.amount > 0) {
+
+    if (amount > 0) {
       content += `
           <tr class="table__item">
             <td>${product.name}</td>
             <td>$${product.price}</td>
-            <td><input type="number" class="modal__item-amount" onchange="updateCartItem(${id}, this.value)" value="${val.amount}"/></td>
-            <td>$${val.total}</td>
+            <td><input type="number" class="modal__item-amount" onchange="updateCartItem(${id}, this.value)" value="${amount}"/></td>
+            <td>$${(amount * product.price).toFixed(2)}</td>
             <td><button onclick="deleteCartItem(${id})" class="modal__item-remove">remove</button></td>
           </tr>
       `;
