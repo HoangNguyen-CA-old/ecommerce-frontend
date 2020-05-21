@@ -7,8 +7,10 @@
 html {
   font-size: 70%;
   --main-color: #febd69;
+  --main-dark: #fea736;
   --secondary-color: #131921;
   --light-secondary: #232f3e;
+  --red: #c3272b;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -27,6 +29,16 @@ html {
 body {
   overflow-x: hidden;
   background-color: #eee;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
 }
 
 .navbar {
@@ -72,6 +84,7 @@ body {
 
   z-index: 1000;
   background-color: white;
+  min-width: 320px;
 }
 
 .modal--active {
@@ -85,6 +98,45 @@ body {
   font-size: 1.2rem;
 }
 
+.modal__main {
+  width: 100%;
+}
+
+.modal__title {
+  font-size: 2rem;
+  margin-bottom: 0.3em;
+}
+
+.modal__table {
+  width: 100%;
+}
+
+.modal__table td {
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.2em 0.5em;
+}
+
+.modal__table th {
+  text-align: left;
+  padding: 0.2em 0.5em;
+}
+
+.modal__item-amount {
+  width: 100%;
+}
+
+.modal__item-remove {
+  background-color: var(--red);
+  text-transform: uppercase;
+  border: none;
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+  cursor: pointer;
+  color: white;
+}
 .navbar__logo-wrapper {
   width: 8rem;
   font-size: 1rem;
@@ -318,5 +370,14 @@ body {
   cursor: pointer;
 }
 
+.button:hover {
+  background-color: var(--main-dark);
+}
+
 .button--buy {
+}
+
+.button--checkout {
+  text-transform: uppercase;
+  font-size: 1.1rem;
 }
